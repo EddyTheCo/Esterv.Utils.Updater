@@ -1,6 +1,8 @@
 # Esterv.Utils.Updater 
 
 This repo implements a C++ class and QML Module that takes care of downloading and installing application updates. 
+The latter can be used to do in-app updates.
+The methods rely on the [Qt Installer Framework ](https://doc.qt.io/qtinstallerframework/)(QtIFW) and that the application also install the 'maintenancetool' provided by the QtIFW. 
 
 ## Dependencies
 
@@ -34,16 +36,16 @@ include(FetchContent)
 FetchContent_Declare(
 	QtUpdater	
 	GIT_REPOSITORY https://github.com/EddyTheCo/QUpdater.git
-	GIT_TAG v0.1.0 
-	FIND_PACKAGE_ARGS 0.1 CONFIG  
+	GIT_TAG vMAJOR.MINOR.PATCH 
+	FIND_PACKAGE_ARGS MAJOR.MINOR CONFIG  
 	)
 FetchContent_MakeAvailable(QtUpdater)
 
-target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> QtUpdater::updater)
+target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> QtUpdater::qupdater)
 ```
 If you want to use the QML module also add
 ```
-$<$<STREQUAL:$<TARGET_PROPERTY:QtVault::vault,TYPE>,STATIC_LIBRARY>:QtUpdater::updaterplugin>
+$<$<STREQUAL:$<TARGET_PROPERTY:QtUpdater::qupdater,TYPE>,STATIC_LIBRARY>:QtUpdater::updaterplugin>
 ```
 
 ## API reference
@@ -64,8 +66,7 @@ One needs to  make available to the QML engine the different modules by setting 
 
 ## Examples
 
-The [examples](examples) folder shows the use of the different custom types provided by the QML module.
-
+The [examples](examples) folder shows the use of the different classes and QML types.
 
 
 ## Contributing
