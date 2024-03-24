@@ -38,9 +38,9 @@ public:
     Q_INVOKABLE void checkUpdates(void);
     Q_INVOKABLE void hasIFW(QString toolname=
 #if defined(Q_OS_WIN)
-                            "../maintenancetool.exe";
+                            "../maintenancetool.exe"
 #elif defined(Q_OS_MAC)
-                            "../../../../maintenancetool.app/Contents/MacOS/maintenancetool";
+                            "../../../../maintenancetool.app/Contents/MacOS/maintenancetool"
 #else
                             "../maintenancetool"
 #endif
