@@ -1,5 +1,7 @@
 # Esterv.Utils.Updater 
 
+[TOC]
+
 This repo implements a C++ class and QML Module that takes care of downloading and installing application updates. 
 The latter can be used to do in-app updates.
 The methods rely on the [Qt Installer Framework ](https://doc.qt.io/qtinstallerframework/)(QtIFW) and that the application also install the 'maintenancetool' provided by the QtIFW. 
