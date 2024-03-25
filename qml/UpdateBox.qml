@@ -19,33 +19,25 @@ Item
             text:(Updater.state===1)?qsTr("There are updates"):((Updater.state===3)?qsTr("Installing updates"):qsTr("Updates are installed"))
         }
 
-        ColumnLayout
+        Button
         {
-            Layout.alignment: Qt.AlignVCenter|Qt.AlignHCenter
-            Button
+            id:action
+            text:(Updater.state===4)?qsTr("Restart"):qsTr("Update")
+            enabled: (Updater.state===4)||(Updater.state===1)
+            onClicked:
             {
-                id:action
-                text:(Updater.state===4)?qsTr("Restart"):qsTr("Update")
-                enabled: (Updater.state===4)||(Updater.state===1)
-                onClicked:
+                if(Updater.state===1)
                 {
-                    if(Updater.state===1)
-                    {
-                        Updater.update();
-                    }
-                    if(Updater.state===4)
-                    {
-                        Updater.restart();
-                    }
+                    Updater.update();
+                }
+                if(Updater.state===4)
+                {
+                    Updater.restart();
                 }
             }
-            Button
-            {
-                id:close
-                text:qsTr("Close")
-                onClicked: control.visible=false;
-            }
         }
+
+
     }
 
 }
