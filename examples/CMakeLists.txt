@@ -28,7 +28,7 @@ if(QTDEPLOY)
         TARGET quickApp
         OUTPUT_SCRIPT deploy_script1
     )
-install(SCRIPT ${deploy_script1} COMPONENT examples)
+install(SCRIPT ${deploy_script1})
 endif(QTDEPLOY)
 endif(USE_QML)
 target_link_libraries(coreApp PRIVATE qupdater)
@@ -47,7 +47,7 @@ qt_generate_deploy_app_script(
     TARGET coreApp
     OUTPUT_SCRIPT deploy_script
 )
-install(SCRIPT ${deploy_script} COMPONENT examples)
+install(SCRIPT ${deploy_script})
 
 
 endif(BUILD_EXAMPLES)
