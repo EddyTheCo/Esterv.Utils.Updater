@@ -20,7 +20,7 @@ if(BUILD_EXAMPLES)
     )
 install(TARGETS quickApp
     BUNDLE  DESTINATION .
-    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     COMPONENT examples
 )
 if(QTDEPLOY)
@@ -39,7 +39,7 @@ set_target_properties(coreApp PROPERTIES
 )
 install(TARGETS coreApp
     BUNDLE  DESTINATION .
-    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     COMPONENT examples
 )
 
@@ -47,7 +47,7 @@ qt_generate_deploy_app_script(
     TARGET coreApp
     OUTPUT_SCRIPT deploy_script
 )
-install(SCRIPT ${deploy_script} COMPONENT examples)
+install(SCRIPT ${deploy_script})
 
 
 endif(BUILD_EXAMPLES)
