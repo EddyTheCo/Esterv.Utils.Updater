@@ -36,6 +36,7 @@ void Updater::restart()
     if(m_state==ReadyToRestart)
     {
         auto args=QCoreApplication::arguments();
+        qDebug()<<"args:"<<args;
         args.removeFirst();
         qint64 pid;
         emit restarting(0);
@@ -67,33 +68,37 @@ void Updater::checkfinished(int exitCode, QProcess::ExitStatus exitStatus)
     if(exitCode == 0){
 
         auto xmlindex= stdOut.lastIndexOf("<?xml");
-        QByteArray xml = stdOut.sliced(xmlindex);
-        QDomDocument xmldoc;
-        xmldoc.setContent(xml);
-
-         qDebug()<<"xmlindex:"<<xmlindex;
-        qDebug()<<"xml:"<<xml;
-         qDebug()<<"xmldoc:"<<xmldoc.toString();
-        auto updates=xmldoc.firstChildElement("updates");
-        QString updateDetails;
-        if(!updates.isNull())
+        if(xmlindex!=-1)
         {
-            for(auto n = updates.firstChildElement("update"); !n.isNull(); n = n.nextSiblingElement("update"))
+            QByteArray xml = stdOut.sliced(xmlindex);
+            QDomDocument xmldoc;
+            xmldoc.setContent(xml);
+
+            qDebug()<<"xmlindex:"<<xmlindex;
+            qDebug()<<"xml:"<<xml;
+            qDebug()<<"xmldoc:"<<xmldoc.toString();
+            auto updates=xmldoc.firstChildElement("updates");
+            QString updateDetails;
+            if(!updates.isNull())
             {
-                const auto name=n.attributeNode("name").value();
-                const auto version=n.attributeNode("version").value();
-                qDebug()<<"name:"<<name<<" version:"<<version;
-                updateDetails.append(name+"-"+version+"\n");
+                for(auto n = updates.firstChildElement("update"); !n.isNull(); n = n.nextSiblingElement("update"))
+                {
+                    const auto name=n.attributeNode("name").value();
+                    const auto version=n.attributeNode("version").value();
+                    qDebug()<<"name:"<<name<<" version:"<<version;
+                    updateDetails.append(name+"-"+version+"\n");
+                }
+            }
+
+            if(updateDetails.length() > 0){
+                m_updateDetails=updateDetails;
+                m_hasUpdate=true;
+                emit updateDetailsChanged();
+                emit hasUpdateChanged();
             }
         }
-
-        if(updateDetails.length() > 0){
-            m_updateDetails=updateDetails;
-            m_hasUpdate=true;
-            emit updateDetailsChanged();
-            emit hasUpdateChanged();
-        }
         setState(Ready);
+
     }
 }
 void Updater::checkUpdates(void)
