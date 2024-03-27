@@ -37,16 +37,15 @@ set_target_properties(coreApp PROPERTIES
     MACOSX_BUNDLE ON
 )
 install(TARGETS coreApp
-    BUNDLE  DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     COMPONENT examples
+    BUNDLE  DESTINATION . COMPONENT examples
 )
 
 qt_generate_deploy_app_script(
     TARGET coreApp
     OUTPUT_SCRIPT deploy_script
 )
-install(SCRIPT ${deploy_script})
+install(SCRIPT ${deploy_script} COMPONENT examples)
 
 
 endif(BUILD_EXAMPLES)
