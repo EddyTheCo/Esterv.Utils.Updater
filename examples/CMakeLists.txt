@@ -18,17 +18,16 @@ if(BUILD_EXAMPLES)
         WIN32_EXECUTABLE ON
         MACOSX_BUNDLE ON
     )
-install(TARGETS quickApp
-    BUNDLE  DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+install(TARGETS quickApp 
     COMPONENT examples
+    BUNDLE  DESTINATION . COMPONENT examples
 )
 if(QTDEPLOY)
     qt_generate_deploy_qml_app_script(
         TARGET quickApp
         OUTPUT_SCRIPT deploy_script1
     )
-install(SCRIPT ${deploy_script1})
+install(SCRIPT ${deploy_script1} COMPONENT examples)
 endif(QTDEPLOY)
 endif(USE_QML)
 target_link_libraries(coreApp PRIVATE qupdater)
@@ -38,16 +37,15 @@ set_target_properties(coreApp PROPERTIES
     MACOSX_BUNDLE ON
 )
 install(TARGETS coreApp
-    BUNDLE  DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     COMPONENT examples
+    BUNDLE  DESTINATION . COMPONENT examples
 )
 
 qt_generate_deploy_app_script(
     TARGET coreApp
     OUTPUT_SCRIPT deploy_script
 )
-install(SCRIPT ${deploy_script})
+install(SCRIPT ${deploy_script} COMPONENT examples)
 
 
 endif(BUILD_EXAMPLES)
