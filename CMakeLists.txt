@@ -7,7 +7,7 @@ include(FetchContent)
 FetchContent_Declare(
 	ccommon
 	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-	GIT_TAG v0.3.0
+	GIT_TAG v0.3.1
 	)
 FetchContent_MakeAvailable(ccommon)
 version_from_git(
@@ -57,6 +57,7 @@ if (Qt6_FOUND)
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}
 			COMPONENT updater
+			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT updater
 			)
 		install(DIRECTORY ${CMAKE_BINARY_DIR}/Esterv/Utils/Updater
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Utils
@@ -66,6 +67,7 @@ if (Qt6_FOUND)
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Utils/Updater
 			COMPONENT updater
+			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT updater
 			)
 	endif(USE_QML)
 
@@ -81,6 +83,7 @@ if (Qt6_FOUND)
 		EXPORT ${PROJECT_NAME}-config
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		COMPONENT updater
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT updater
 		)
 	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Esterv
