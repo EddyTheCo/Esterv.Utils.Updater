@@ -7,16 +7,20 @@
 #include<QtQml>
 #endif
 
+#if defined(_WIN32) && defined(UPDATER_SHARED)
 #include <QtCore/QtGlobal>
-#if defined(WINDOWS_QUPDA)
-#define QUPDA_EXPORT Q_DECL_EXPORT
+  #ifdef WINDOWS_EXPORT
+    #define UPDAT_EXPORT Q_DECL_EXPORT
+  #else
+    #define UPDAT_EXPORT Q_DECL_IMPORT
+  #endif
 #else
-#define QUPDA_EXPORT Q_DECL_IMPORT
+  #define UPDAT_EXPORT
 #endif
 
 namespace Esterv::Utils{
 
-class QUPDA_EXPORT Updater: public QObject
+class UPDAT_EXPORT Updater: public QObject
 {
 
     Q_OBJECT
