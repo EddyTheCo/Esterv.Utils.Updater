@@ -7,6 +7,7 @@
 #include<QtQml>
 #endif
 
+#include <QtCore/QtGlobal>
 #if defined(WINDOWS_QUPDA)
 # define QUPDA_EXPORT Q_DECL_EXPORT
 #else
