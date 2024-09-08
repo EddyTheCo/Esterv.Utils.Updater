@@ -9,12 +9,10 @@
 
 #include <QtCore/QtGlobal>
 #if defined(WINDOWS_QUPDA)
-# define QUPDA_EXPORT Q_DECL_EXPORT
+#define QUPDA_EXPORT Q_DECL_EXPORT
 #else
 #define QUPDA_EXPORT Q_DECL_IMPORT
 #endif
-
-#include <QDebug>
 
 namespace Esterv::Utils{
 
@@ -77,7 +75,7 @@ signals:
     void hasUpdateChanged();
 
 private:
-    void setState(State sta){if(sta!=m_state){m_state=sta;qDebug()<<"state:"<<sta;emit stateChanged();}}
+    void setState(State sta){if(sta!=m_state){m_state=sta;emit stateChanged();}}
 
 
     void checkfinished(int exitCode, QProcess::ExitStatus exitStatus);
