@@ -7,7 +7,7 @@ include(FetchContent)
 FetchContent_Declare(
 	ccommon
 	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-	GIT_TAG v0.4.0
+	GIT_TAG ndk26
 	)
 FetchContent_MakeAvailable(ccommon)
 version_from_git(
@@ -15,7 +15,7 @@ version_from_git(
 	TIMESTAMP "%Y%m%d%H%M%S"
 	)
 
-project(QtUpdater VERSION ${VERSION} DESCRIPTION "In-app updater" LANGUAGES CXX)
+project(EstervUpdater VERSION ${VERSION} DESCRIPTION "In-app updater" LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -33,11 +33,11 @@ endif(USE_QML)
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()
-	add_library(qupdater include/qupdater.hpp src/qupdater.cpp)
-	add_library(${PROJECT_NAME}::qupdater ALIAS qupdater)
-	set_target_properties(qupdater PROPERTIES VERSION ${VERSION} SOVERSION ${VERSION_MAJOR})
+	add_library(updater include/esterv/utils/updater.hpp src/updater.cpp)
+	add_library(Esterv::updater ALIAS updater)
+	set_target_properties(updater PROPERTIES VERSION ${VERSION} SOVERSION ${VERSION_MAJOR})
 	if(USE_QML)
-		qt6_add_qml_module(qupdater
+		qt6_add_qml_module(updater
 			URI  Esterv.Utils.Updater
 			VERSION 1.0
 			QML_FILES
@@ -49,45 +49,46 @@ if (Qt6_FOUND)
 			${CMAKE_BINARY_DIR}/Esterv/Utils/Updater
 			IMPORT_PATH ${CMAKE_BINARY_DIR}
 			)
-		add_library(${PROJECT_NAME}::qupdaterplugin ALIAS qupdaterplugin)
-		target_link_libraries(qupdater PUBLIC Qt6::Gui Qt6::Quick)
-		target_compile_definitions(qupdater PRIVATE USE_QML)
+		add_library(Esterv::updaterplugin ALIAS updaterplugin)
+		target_link_libraries(updater PUBLIC Qt6::Gui Qt6::Quick)
+		target_compile_definitions(updater PRIVATE USE_QML)
 
 		install(TARGETS ${out_targets_var}
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}
-			COMPONENT updater
-			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT updater
+			COMPONENT ${PROJECT_NAME}-qml
+			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT ${PROJECT_NAME}-qml
 			)
 		install(DIRECTORY ${CMAKE_BINARY_DIR}/Esterv/Utils/Updater
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Utils
-			COMPONENT updater
+			COMPONENT ${PROJECT_NAME}-qml
 			)
-		install(TARGETS qupdaterplugin
+		install(TARGETS updaterplugin
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Utils/Updater
-			COMPONENT updater
-			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT updater
+			COMPONENT ${PROJECT_NAME}-qml
+			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT ${PROJECT_NAME}-qml
 			)
 	endif(USE_QML)
 
 
-	target_include_directories(qupdater PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Esterv/>")
+	target_include_directories(updater PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+	target_include_directories(updater PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/esterv/utils>)
 
-	target_link_libraries(qupdater PUBLIC Qt6::Core Qt6::Xml )
-	target_compile_definitions(qupdater PRIVATE WINDOWS_QUPDA)
+	target_link_libraries(updater PUBLIC Qt6::Core Qt6::Xml )
+	target_compile_definitions(updater PRIVATE WINDOWS_QUPDA)
 
 
-	install(TARGETS qupdater
+	install(TARGETS updater
 		EXPORT ${PROJECT_NAME}-config
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		COMPONENT updater
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT updater
+		COMPONENT ${PROJECT_NAME}
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT ${PROJECT_NAME}
 		)
 	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Esterv
-		COMPONENT ${PROJECT_NAME}
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+		COMPONENT ${PROJECT_NAME}-dev
 		)
 
 	build_exports()
@@ -95,9 +96,7 @@ if (Qt6_FOUND)
 		add_subdirectory(examples)
 		build_cpack()
 	endif(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-
 endif(Qt6_FOUND)
-
 
 if(BUILD_DOCS)
 	build_docs()

@@ -1,8 +1,8 @@
 
 #include <QCoreApplication>
-#include "qupdater.hpp"
+#include "esterv/utils/updater.hpp"
 
-using namespace qutils;
+using namespace Esterv::Utils;
 
 int main(int argc, char *argv[])
 {

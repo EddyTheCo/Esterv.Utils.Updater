@@ -15,7 +15,7 @@
 
 #include <QDebug>
 
-namespace qutils{
+namespace Esterv::Utils{
 
 class QUPDA_EXPORT Updater: public QObject
 {
