@@ -7,7 +7,7 @@
 #include<QtQml>
 #endif
 
-#if defined(_WIN32) && defined(UPDATER_SHARED)
+#if defined(UPDATER_SHARED)
 #include <QtCore/QtGlobal>
   #ifdef WINDOWS_EXPORT
     #define UPDAT_EXPORT Q_DECL_EXPORT

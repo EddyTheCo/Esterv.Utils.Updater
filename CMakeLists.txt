@@ -93,9 +93,9 @@ if(Qt6_FOUND)
       $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,SHARED>>,UPDATER_SHARED,>
   )
   target_compile_definitions(
-    updater
-    PRIVATE
-    $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,SHARED>>,WINDOWS_EXPORT,>
+	  updater
+	  PRIVATE 
+	  $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,SHARED>>,WINDOWS_EXPORT,>
   )
 
   install(
