@@ -1,10 +1,10 @@
-#include"qupdater.hpp"
+#include"esterv/utils/updater.hpp"
 #include <QCoreApplication>
 #include <QFile>
 #include <QDir>
 #include <QDomDocument>
 
-namespace qutils{
+namespace Esterv::Utils{
 
 Updater* Updater::m_instance=nullptr;
 Updater* Updater::instance()

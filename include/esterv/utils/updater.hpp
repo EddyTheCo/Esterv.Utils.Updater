@@ -7,17 +7,20 @@
 #include<QtQml>
 #endif
 
-#if defined(WINDOWS_QUPDA)
-# define QUPDA_EXPORT Q_DECL_EXPORT
+#if defined(UPDATER_SHARED)
+#include <QtCore/QtGlobal>
+  #ifdef WINDOWS_EXPORT
+    #define UPDAT_EXPORT Q_DECL_EXPORT
+  #else
+    #define UPDAT_EXPORT Q_DECL_IMPORT
+  #endif
 #else
-#define QUPDA_EXPORT Q_DECL_IMPORT
+  #define UPDAT_EXPORT
 #endif
 
-#include <QDebug>
+namespace Esterv::Utils{
 
-namespace qutils{
-
-class QUPDA_EXPORT Updater: public QObject
+class UPDAT_EXPORT Updater: public QObject
 {
 
     Q_OBJECT
@@ -76,7 +79,7 @@ signals:
     void hasUpdateChanged();
 
 private:
-    void setState(State sta){if(sta!=m_state){m_state=sta;qDebug()<<"state:"<<sta;emit stateChanged();}}
+    void setState(State sta){if(sta!=m_state){m_state=sta;emit stateChanged();}}
 
 
     void checkfinished(int exitCode, QProcess::ExitStatus exitStatus);
