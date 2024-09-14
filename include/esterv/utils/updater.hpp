@@ -7,16 +7,12 @@
 #include<QtQml>
 #endif
 
-#if defined(UPDATER_SHARED)
 #include <QtCore/QtGlobal>
   #ifdef WINDOWS_EXPORT
     #define UPDAT_EXPORT Q_DECL_EXPORT
   #else
     #define UPDAT_EXPORT Q_DECL_IMPORT
   #endif
-#else
-  #define UPDAT_EXPORT
-#endif
 
 namespace Esterv::Utils{
 
