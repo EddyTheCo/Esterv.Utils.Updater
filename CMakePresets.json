@@ -8,7 +8,6 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
-	"BUILD_SHARED_LIBS": "ON",
         "CMAKE_BUILD_TYPE": "Release",
 	"REPO_URL":"https://eddytheco.github.io/Esterv.Utils.Updater"
       }

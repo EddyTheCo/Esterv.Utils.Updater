@@ -85,17 +85,16 @@ if(Qt6_FOUND)
     PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/esterv/utils>)
 
   target_link_libraries(updater PUBLIC Qt6::Core Qt6::Xml)
-  target_compile_definitions(updater PRIVATE WINDOWS_EXPORT)
 
   target_compile_definitions(
     updater
     PUBLIC
-      $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,SHARED>>,UPDATER_SHARED,>
+      $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,SHARED_LIBRARY>>,UPDATER_SHARED,>
   )
   target_compile_definitions(
 	  updater
 	  PRIVATE 
-	  $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,SHARED>>,WINDOWS_EXPORT,>
+	  WINDOWS_EXPORT
   )
 
   install(
