@@ -61,10 +61,11 @@ if(Qt6_FOUND)
     add_library(Esterv::Updaterplugin ALIAS Updaterplugin)
     target_link_libraries(Updater PUBLIC Qt6::Gui Qt6::Quick)
     target_compile_definitions(Updater PRIVATE USE_QML)
-  
+
     target_include_directories(
-    Updater
-    PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/esterv/utils>)
+      Updater
+      PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/esterv/utils>)
 
     install(
       TARGETS ${out_targets_var}
@@ -97,18 +98,13 @@ if(Qt6_FOUND)
     PUBLIC
       $<IF:$<AND:$<BOOL:WIN32>,$<STREQUAL:$<TARGET_PROPERTY:Updater,TYPE>,SHARED_LIBRARY>>,UPDATER_SHARED,>
   )
-  target_compile_definitions(
-	  Updater
-	  PRIVATE 
-	  WINDOWS_EXPORT
-  )
+  target_compile_definitions(Updater PRIVATE WINDOWS_EXPORT)
 
   install(
     TARGETS Updater
     EXPORT ${PROJECT_NAME}-config
     COMPONENT ${PROJECT_NAME}
-    ARCHIVE COMPONENT ${PROJECT_NAME}-dev
-    )
+    ARCHIVE COMPONENT ${PROJECT_NAME}-dev)
   install(
     DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
