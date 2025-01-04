@@ -26,12 +26,12 @@ FetchContent_Declare(
 	FIND_PACKAGE_ARGS MAJOR.MINOR CONFIG
 	)
 FetchContent_MakeAvailable(EstervUpdater)
-target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> Esterv::updater)
+target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> Esterv::Updater)
 ```
 
 If you want to use the QML module also add
 ```
-$<$<STREQUAL:$<TARGET_PROPERTY:Esterv::updater,TYPE>,STATIC_LIBRARY>:Esterv::updaterplugin>
+$<$<STREQUAL:$<TARGET_PROPERTY:Esterv::Updater,TYPE>,STATIC_LIBRARY>:Esterv::Updaterplugin>
 ```
 
 ## API reference

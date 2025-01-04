@@ -1,8 +1,7 @@
 if(BUILD_EXAMPLES)
-	include(InstallRequiredSystemLibraries)
-	qt_add_executable(coreApp coreApp.cpp )
+	qt_add_executable(CoreApp coreApp.cpp)
 	if(USE_QML)
-		qt_add_executable(quickApp quickApp.cpp)
+		qt_add_executable(QuickApp quickApp.cpp)
 		qt6_add_qml_module(quickApp
 			URI  EquickApp
 			VERSION 1.0
@@ -12,31 +11,31 @@ if(BUILD_EXAMPLES)
 			"/esterVtech.com/imports"
 			IMPORT_PATH ${CMAKE_BINARY_DIR}
 			)
-		target_link_libraries(quickApp PRIVATE Qt::Gui Qt::Qml Qt::Quick updater
-			$<$<STREQUAL:$<TARGET_PROPERTY:updater,TYPE>,STATIC_LIBRARY>:updaterplugin>)
-		set_target_properties(quickApp PROPERTIES
+		target_link_libraries(QuickApp PRIVATE Qt::Gui Qt::Qml Qt::Quick Updater
+			$<$<STREQUAL:$<TARGET_PROPERTY:Updater,TYPE>,STATIC_LIBRARY>:Updaterplugin>)
+		set_target_properties(QuickApp PROPERTIES
 			WIN32_EXECUTABLE ON
 			MACOSX_BUNDLE ON
 			)
-		install(TARGETS quickApp
+		install(TARGETS QuickApp
 			COMPONENT ${PROJECT_NAME}-examples
 			BUNDLE  DESTINATION . COMPONENT ${PROJECT_NAME}-examples
 			)
 		if(QTDEPLOY)
 			qt_generate_deploy_qml_app_script(
-				TARGET quickApp
+				TARGET QuickApp
 				OUTPUT_SCRIPT deploy_script1
 				)
 			install(SCRIPT ${deploy_script1} COMPONENT ${PROJECT_NAME}-examples)
 		endif(QTDEPLOY)
 	endif(USE_QML)
-	target_link_libraries(coreApp PRIVATE updater)
+	target_link_libraries(CoreApp PRIVATE Updater)
 
-	set_target_properties(coreApp PROPERTIES
+	set_target_properties(CoreApp PROPERTIES
 		WIN32_EXECUTABLE ON
 		MACOSX_BUNDLE ON
 		)
-	install(TARGETS coreApp
+		install(TARGETS CoreApp
 		COMPONENT ${PROJECT_NAME}-examples
 		BUNDLE  DESTINATION . COMPONENT ${PROJECT_NAME}-examples
 		)
