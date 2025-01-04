@@ -1,39 +1,32 @@
 
+#include "esterv/utils/updater.hpp"
 #include <QCoreApplication>
-#include "qupdater.hpp"
 
-using namespace qutils;
+using namespace Esterv::Utils;
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+  QCoreApplication app(argc, argv);
 
-    const auto instance=Updater::instance();
+  const auto instance = Updater::instance();
 
-    QObject::connect(instance,&Updater::stateChanged,&app,[=](){
-        const auto state= instance->state();
-        auto details=instance->updateDetails();
-        qDebug()<<"Updater State Changed to:"<< state;
-        qDebug()<<"Update details:"<< details;
+  QObject::connect(instance, &Updater::stateChanged, &app, [=]() {
+    const auto state = instance->state();
+    auto details = instance->updateDetails();
+    qDebug() << "Updater State Changed to:" << state;
+    qDebug() << "Update details:" << details;
 
-        if(state==Updater::Ready)
-        {
-            if(instance->hasUpdate())
-            {
-                instance->update();
-            }
-            else
-            {
-                instance->checkUpdates();
-            }
-        }
-        if(state==Updater::ReadyToRestart)
-        {
-            instance->restart();
-        }
+    if (state == Updater::Ready) {
+      if (instance->hasUpdate()) {
+        instance->update();
+      } else {
+        instance->checkUpdates();
+      }
+    }
+    if (state == Updater::ReadyToRestart) {
+      instance->restart();
+    }
+  });
 
-    });
-
-    instance->hasIFW();
-    return app.exec();
+  instance->hasIFW();
+  return app.exec();
 }

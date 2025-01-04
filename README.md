@@ -4,58 +4,42 @@
 
 This repo implements a C++ class and QML Module that takes care of downloading and installing application updates. 
 The latter can be used to do in-app updates.
-The methods rely on the [Qt Installer Framework ](https://doc.qt.io/qtinstallerframework/)(QtIFW) and that the application also install the 'maintenancetool' provided by the QtIFW. 
+The methods rely on the [Qt Installer Framework ](https://doc.qt.io/qtinstallerframework/)(QtIFW) and that the application also installs the 'maintenancetool' provided by the QtIFW. 
 
 ## Dependencies
 
 The repo depends on [Qt](https://doc.qt.io/) libraries.
 
-## Installing the library 
-
-### From source code
-```
-git clone https://github.com/EddyTheCo/QUpdater.git
-
-mkdir build
-cd build
-qt-cmake -G Ninja -DCMAKE_INSTALL_PREFIX=installDir -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DQTDEPLOY=OFF -DUSE_QML=OFF -DBUILD_DOCS=OFF ../QUpdater
-
-cmake --build . 
-
-cmake --install . 
-```
-where `installDir` is the installation path, `QTDEPLOY` install the examples and Qt dependencies using the 
-[cmake-deployment-api](https://www.qt.io/blog/cmake-deployment-api). Setting the `USE_QML` variable produce or not the QML module.
-One can choose to build the examples and the documentation with the `BUILD_EXAMPLES` and `BUILD_DOCS` variables.
-
-### From GitHub releases
-Download the releases from this repo. 
+## Configure, build, test, package ...
+ 
+The project uses [CMake presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) as a way to share CMake configurations.
+Refer to [cmake](https://cmake.org/cmake/help/latest/manual/cmake.1.html), [ctest](https://cmake.org/cmake/help/latest/manual/ctest.1.html) and [cpack](https://cmake.org/cmake/help/latest/manual/cpack.1.html) documentation for more information on the use of presets.
 
 ## Adding the libraries to your CMake project 
 
 ```CMake
 include(FetchContent)
 FetchContent_Declare(
-	QtUpdater	
-	GIT_REPOSITORY https://github.com/EddyTheCo/QUpdater.git
-	GIT_TAG vMAJOR.MINOR.PATCH 
-	FIND_PACKAGE_ARGS MAJOR.MINOR CONFIG  
+	EstervUpdater
+	GIT_REPOSITORY https://github.com/EddyTheCo/Esterv.Utils.Updater.git
+	GIT_TAG vMAJOR.MINOR.PATCH
+	FIND_PACKAGE_ARGS MAJOR.MINOR CONFIG
 	)
-FetchContent_MakeAvailable(QtUpdater)
-
-target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> QtUpdater::qupdater)
+FetchContent_MakeAvailable(EstervUpdater)
+target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> Esterv::Updater)
 ```
+
 If you want to use the QML module also add
 ```
-$<$<STREQUAL:$<TARGET_PROPERTY:QtUpdater::qupdater,TYPE>,STATIC_LIBRARY>:QtUpdater::updaterplugin>
+$<$<STREQUAL:$<TARGET_PROPERTY:Esterv::Updater,TYPE>,STATIC_LIBRARY>:Esterv::Updaterplugin>
 ```
 
 ## API reference
 
-You can read the [API reference](https://eddytheco.github.io/QUpdater/), or generate it yourself like
+You can read the [API reference](https://eddytheco.github.io/Esterv.Utils.Updater/) here, or generate it yourself like
+
 ```
-cmake -DBUILD_DOCS=ON ../
-cmake --build . --target doxygen_docs
+cmake --workflow --preset default-documentation
 ```
 
 ## Using the QML modules
