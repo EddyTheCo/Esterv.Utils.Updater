@@ -2,7 +2,7 @@ if(BUILD_EXAMPLES)
 	qt_add_executable(CoreApp coreApp.cpp)
 	if(USE_QML)
 		qt_add_executable(QuickApp quickApp.cpp)
-		qt6_add_qml_module(quickApp
+		qt6_add_qml_module(QuickApp
 			URI  EquickApp
 			VERSION 1.0
 			QML_FILES
@@ -41,7 +41,7 @@ if(BUILD_EXAMPLES)
 		)
 
 	qt_generate_deploy_app_script(
-		TARGET coreApp
+		TARGET CoreApp
 		OUTPUT_SCRIPT deploy_script
 		)
 	install(SCRIPT ${deploy_script} COMPONENT ${PROJECT_NAME}-examples)
